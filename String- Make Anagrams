@@ -1,0 +1,58 @@
+/*
+Author: Pranati Shrivastava
+Strings: Making Anagrams- Find the number of letters that need to be deleted from the given two strings in order to make them an Anagram.
+
+Explanation:
+
+1. create an array of 26 elements for each alphabet.
+2. Increment the value by +1 in this array by using the asci values of the letters in first string ex:arr[first.charAt(i)-97]+=1
+
+3. Now, Decrement the value by -1 from this array for all the letters present in second string. This will make the index of all the letters needed for Anagram to be 0.
+4. Now add up all the counts for indices in that array. Make sure to use the absolute values. ex: count+=Math.abs(arr[k]);
+
+
+
+*/
+
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+public class Solution {
+    public static int numberNeeded(String first, String second) {
+        //STEP 1
+        int arr[]=new int[26]; //Make an array to store the occurrence of a letter based on its ASCI value
+       // Arrays.fill(arr, 0);
+        int count=0;
+        first=first.toLowerCase();
+        second=second.toLowerCase();
+        
+        //STEP 2
+        for(int i=0;i<first.length();i++){
+            arr[first.charAt(i)-97]+=1; //-97 to match the Asci value with the index of the array
+        }
+        
+        //STEP 3
+        for(int j=0;j<second.length();j++){
+            arr[second.charAt(j)-97]-=1;
+        }
+        
+        for(int k=0;k<26;k++){
+            
+            if(arr[k]!=0){
+                count+=Math.abs(arr[k]); //STEP 4
+            }
+        }
+        
+        
+        return count;
+    }
+  
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        String a = in.next();
+        String b = in.next();
+        System.out.println(numberNeeded(a, b));
+    }
+}
