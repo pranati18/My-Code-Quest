@@ -1,0 +1,86 @@
+/**
+*Author: Pranati Shrivastava
+Hash Tables: Ransom Note- Compare two Strings and see if the the second string contains all the words from string one. Each word is unique and counted only a single time.
+
+Explanation:
+
+1. Create a HashMap for both the strings. Store split words as keys and map them to int values based on the number of occurrence of a word in the string.
+2. Check two conditions:
+    -a. If the words in string 2 are present in main string.
+    -b. If the words in string 2 are present as many number of times in main string ; as they exist in string 2
+
+
+*/
+
+
+import java.util.*;
+
+public class Solution {
+    Map<String, Integer> magazineMap;
+    Map<String, Integer> noteMap;
+        
+     public Solution(String magazine, String note) {
+        magazineMap = new HashMap<String, Integer>();
+        noteMap = new HashMap<String, Integer>();
+        
+         putValues(magazineMap,magazine);
+           putValues(noteMap,note);
+       
+         
+    }
+    //STEP 1
+    public void putValues(Map<String, Integer> magazineMap, String magazine){
+         String words[] = magazine.split(" ");
+        for(String word:words){
+            if(!magazineMap.containsKey(word)){
+                magazineMap.put(word,1);
+            }
+            else{
+                if(magazineMap.get(word)==null){
+                    magazineMap.put(word,0);
+                }
+                else{
+                    magazineMap.put(word,magazineMap.get(word)+1);
+                }
+            }
+        }
+    }
+    
+    public boolean solve() {
+        
+        for(String keys: noteMap.keySet()){
+            if(magazineMap.get(keys)<noteMap.get(keys)){  //STEP 2 a
+                return false;
+            }
+            if(!magazineMap.containsKey(keys)){   //STEP 2 b 
+                return false;
+            }
+        }
+       
+        return true;
+    }
+    
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int m = scanner.nextInt();
+        int n = scanner.nextInt();
+        
+       
+        
+        // Eat whitespace to beginning of next line
+        scanner.nextLine();
+        
+        Solution s = new Solution(scanner.nextLine(), scanner.nextLine());
+        scanner.close();
+        
+        boolean answer = s.solve();
+         if(m<n){
+            System.out.println("No");
+        }
+        else if(answer)
+            System.out.println("Yes");
+        else System.out.println("No");
+      
+    }
+}
